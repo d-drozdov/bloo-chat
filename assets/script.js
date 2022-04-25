@@ -19,9 +19,9 @@ document.addEventListener("DOMContentLoaded", (_event) => {
   socket.on("message", (msg) => {
     const message = document.createElement("li");
     let color = "#FFFFFF";
-    if(msg.type === "join") color = "#00FF00";
-    else if(msg.type === "disconnect") color = "#FF0000";
-    message.innerHTML = `<font color="${color}"><span style="background-color:#001540"><strong>${msg.user}</strong></span>: ${msg.message}</font>`;
+    if(msg.type === "join") color = "#07b240";
+    else if(msg.type === "disconnect") color = "red";
+    message.innerHTML = `<font color="${color}"><button class="nametag" style = "color:${color}"><strong>${msg.user}:</strong></button> ${msg.message}</font>`;
     messages.appendChild(message);
     messages.scrollTop = messages.scrollHeight
   });

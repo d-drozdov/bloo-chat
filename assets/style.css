@@ -86,3 +86,14 @@ form button {
   background-color: #000051;
   border-radius: 0.25rem;
 }
+
+button.nametag{
+  background-color: #001235;
+  border: none;
+  padding: 3px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font: 12px Helvetica, Arial;
+  border-radius: 15px;
+}

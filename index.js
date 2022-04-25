@@ -52,8 +52,6 @@ io.on("connection", function (socket) {
     activeUsers.set(socket.id, user);
   });
 
-
-
   socket.on("message", (msg) => {
     debug(`${msg.user}: ${msg.message}`);
     //Broadcast the message to everyone
