@@ -96,4 +96,5 @@ button.nametag{
   display: inline-block;
   font: 12px Helvetica, Arial;
   border-radius: 15px;
+  font-weight: bold;
 }

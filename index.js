@@ -20,7 +20,9 @@ app.get("/", (req, res) => {
 });
 
 app.get("/chatroom", (req, res) => {
+  //if isauthenticated 
   res.render("chatroom.njk", { uname: req.query.uname });
+  // else render index.njk
 });
 
 const activeUsers = new Map();
@@ -28,28 +30,11 @@ const activeUsers = new Map();
 io.on("connection", function (socket) {
 
   socket.on("join", (msg) => {
-    console.log("connection occured");
-    //This outputs a welcome message to the current user
-    const user = msg.user;
-    msg.user = "BlooChatApp";
-    debug(`${msg.user}: ${msg.message}`);
-    socket.emit("message", msg);
-    
-    //This outputs to the current user who else in the room
-    let outputString = "Unfortunately no one else is in the room";
-    if(activeUsers.size != 0){
-      outputString = "Online Users: ";
-      outputString +=`${Array.from(activeUsers.values()).join(", ")}`;
-    }
-    msg.message = outputString
-    debug(`${msg.user}: ${msg.message}`);
-    socket.emit("message", msg);
-
-    //This outputs to everyone except the user that current user has joined
-    msg.message = `${user} just joined!`;
-    socket.broadcast.emit("message", msg);
-    
-    activeUsers.set(socket.id, user);
+    const newUser = msg.user;
+    outputWelcomeMessageToCurrUser(socket, msg);
+    outputActiveUsersToCurrUser(socket, msg);
+    informOtherUsersOfNewUser(socket, msg, newUser);
+    activeUsers.set(socket.id, newUser);
   });
 
   socket.on("message", (msg) => {
@@ -63,7 +48,7 @@ io.on("connection", function (socket) {
     const userThatLeft = activeUsers.get(socket.id);
     const msg = {
       user : "BlooChatApp",
-      message: `${userThatLeft} has left!`,
+      message: `${userThatLeft} has left`,
       type: "disconnect"
     };
     debug(`${msg.user}: ${msg.message}`)
@@ -72,6 +57,29 @@ io.on("connection", function (socket) {
   });
 
 });
+
+function  outputWelcomeMessageToCurrUser(socket, msg){
+  msg.user = "BlooChatApp";
+  debug(`${msg.user}: ${msg.message}`);
+  socket.emit("message", msg); 
+}
+
+function outputActiveUsersToCurrUser(socket, msg){
+  let outputString = "Unfortunately no one else is in the room";
+  if(activeUsers.size != 0){
+    outputString = "Online Users: ";
+    outputString +=`${Array.from(activeUsers.values()).join(", ")}`;
+  }
+  msg.message = outputString
+  debug(`${msg.user}: ${msg.message}`);
+  socket.emit("message", msg);
+}
+
+function informOtherUsersOfNewUser(socket, msg, newUser){
+  msg.message = `${newUser} just joined!`;
+  socket.broadcast.emit("message", msg);
+}
+
 
 http.listen(port, () => {
   console.log(`Express app listening at http://localhost:${port}`);

@@ -5,10 +5,11 @@ document.addEventListener("DOMContentLoaded", (_event) => {
   const form = document.getElementById("chatForm");
   const messages = document.getElementById("messages");
   const messageToSend = document.getElementById("txt");
+  
   form.addEventListener("submit", (event) => {
     socket.emit("message", {
       user: username,
-      message: messageToSend.value,
+      message: sanitizeMessage(messageToSend.value),
       type: "message"
     });
     messageToSend.value = "";
@@ -18,19 +19,23 @@ document.addEventListener("DOMContentLoaded", (_event) => {
   // append the chat text message
   socket.on("message", (msg) => {
     const message = document.createElement("li");
-    let color = "#FFFFFF";
+    let color = "white";
     if(msg.type === "join") color = "#07b240";
-    else if(msg.type === "disconnect") color = "red";
-    message.innerHTML = `<font color="${color}"><button class="nametag" style = "color:${color}"><strong>${msg.user}:</strong></button> ${msg.message}</font>`;
+    else if(msg.type === "disconnect") color = "pink";
+    message.innerHTML = `<button class="nametag" style="color:${color}">${msg.user}:</button> <font color="${color}">${msg.message}</font>`;
     messages.appendChild(message);
-    messages.scrollTop = messages.scrollHeight
+    messages.scrollTop = messages.scrollHeight;
   });
 
   socket.emit("join", {
     user: username,
-    message: `Welcome ${username}`,
+    message: `Welcome ${username}!`,
     type: "join"
   });
 
-  
 });
+
+function sanitizeMessage(message){
+  //TODO: Implement by removing brackets
+  return sanitizedString;
+}
