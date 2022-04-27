@@ -19,10 +19,25 @@ document.addEventListener("DOMContentLoaded", (_event) => {
   // append the chat text message
   socket.on("message", (msg) => {
     const message = document.createElement("li");
+    message.id = "message";
     let color = "white";
-    if(msg.type === "join") color = "#07b240";
-    else if(msg.type === "disconnect") color = "pink";
-    message.innerHTML = `<button class="nametag" style="color:${color}">${msg.user}:</button> <font color="${color}">${msg.message}</font>`;
+    if(msg.type === "join") {
+      color = "#07b240";
+    } else if(msg.type === "disconnect") {
+      color = "pink";
+    }
+    const userTag = document.createElement("span");
+    userTag.className = "nametag";
+    userTag.style.color = color;
+    userTag.innerText = msg.user;
+    
+    const userMessage = document.createElement("span");
+    userMessage.style.color = color;
+    userMessage.innerText = ` ${msg.message}`;
+
+    message.append(userTag);
+    message.append(userMessage);
+    //message.innerHTML = `<button class="nametag" style="color:${color}">${msg.user}:</button><font color="${color}"> ${msg.message}</font>`;
     messages.appendChild(message);
     messages.scrollTop = messages.scrollHeight;
   });
@@ -34,8 +49,3 @@ document.addEventListener("DOMContentLoaded", (_event) => {
   });
 
 });
-
-function sanitizeMessage(message){
-  //TODO: Implement by removing brackets
-  return sanitizedString;
-}

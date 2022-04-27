@@ -87,7 +87,7 @@ form button {
   border-radius: 0.25rem;
 }
 
-button.nametag{
+span.nametag{
   background-color: #001235;
   border: none;
   padding: 3px 12px;
@@ -98,3 +98,4 @@ button.nametag{
   border-radius: 15px;
   font-weight: bold;
 }
+
