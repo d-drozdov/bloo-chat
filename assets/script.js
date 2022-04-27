@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", (_event) => {
   form.addEventListener("submit", (event) => {
     socket.emit("message", {
       user: username,
-      message: sanitizeMessage(messageToSend.value),
+      message: messageToSend.value,
       type: "message"
     });
     messageToSend.value = "";
