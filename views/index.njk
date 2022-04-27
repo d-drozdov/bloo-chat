@@ -4,9 +4,16 @@
     <h1>Welcome
       <br><br>to<br><br>
       Bloo Chat!</h1>
-    <form action="/chatroom" id="chatForm">
-      <input name="uname" id="txt" autocomplete="off" autofocus="on" placeholder="type your nickname here..."/>
-      <button>Join</button>
+    <form id="chatForm">
+      <input name="uname" id="uname" autocomplete="off" autofocus="on" placeholder="type your username here..."/>
+      <button id="loginButton" style="width:75px">
+        Login
+      </button>
+      <input name="password" id="password" autocomplete="off" autofocus="on" placeholder="type your password here..."/>
+      <button id="registerButton" style="width:75px">Register</button>
     </form>
   </div>
+{% endblock %}
+{% block script %}
+  <script src = "./loginScript.js"></script>
 {% endblock %}

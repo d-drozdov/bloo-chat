@@ -2,12 +2,14 @@
 {% block body1 %}
   <div class="chat">
     <ul id="messages"></ul>
-    <form action="/" id="chatForm">
+    <form id="chatForm">
       <label for="message" id="uname">{{ uname }}</label>
       <input name="message" id="txt" autocomplete="off" autofocus="on" placeholder="type your message here..."/>
       <button>Send</button>
     </form>
-  </div>
+  </div> 
+{% endblock %}
+{% block script %}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.1/socket.io.js"></script>
-  <script src="script.js"></script>
+  <script src="chatRoomScript.js"></script>
 {% endblock %}

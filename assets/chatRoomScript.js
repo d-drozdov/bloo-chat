@@ -1,4 +1,25 @@
-document.addEventListener("DOMContentLoaded", (_event) => {
+
+document.addEventListener("DOMContentLoaded", async (_event) => {
+
+  const token = sessionStorage.getItem('token');
+
+  if (token) {
+    const res = await fetch('/verify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        token: token,
+      }),
+    })
+    if (res.status !== 200) {
+      location.href = '/';
+    }
+  } else {
+    location.href = '/';
+  }
+
   // Connect to socket.io
   const socket = io(); // automatically tries to connect on same port app was served from
   const username = document.getElementById("uname").innerText;
@@ -26,18 +47,19 @@ document.addEventListener("DOMContentLoaded", (_event) => {
     } else if(msg.type === "disconnect") {
       color = "pink";
     }
+    
     const userTag = document.createElement("span");
     userTag.className = "nametag";
     userTag.style.color = color;
     userTag.innerText = msg.user;
-    
+
     const userMessage = document.createElement("span");
     userMessage.style.color = color;
     userMessage.innerText = ` ${msg.message}`;
 
     message.append(userTag);
     message.append(userMessage);
-    //message.innerHTML = `<button class="nametag" style="color:${color}">${msg.user}:</button><font color="${color}"> ${msg.message}</font>`;
+
     messages.appendChild(message);
     messages.scrollTop = messages.scrollHeight;
   });
