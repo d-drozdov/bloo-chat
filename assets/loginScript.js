@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", (_event) => {
       if (res.status === 200){
         const { token } = await res.json();
         sessionStorage.setItem('token', token);
+        sessionStorage.setItem('user', username);
         location.href = `/chatroom?uname=${username}`;
       } else if( res.status === 403){
         window.alert("Incorrect username or password");
@@ -55,6 +56,7 @@ document.addEventListener("DOMContentLoaded", (_event) => {
       if (res.status === 201) {
         const { token } = await res.json();
         sessionStorage.setItem('token', token);
+        sessionStorage.setItem('user', username); 
         location.href = `/chatroom?uname=${username}`;
       } else {
         window.alert("Could not create user, user may already exist");

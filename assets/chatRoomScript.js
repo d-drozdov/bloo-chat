@@ -2,6 +2,7 @@
 document.addEventListener("DOMContentLoaded", async (_event) => {
 
   const token = sessionStorage.getItem('token');
+  const user = sessionStorage.getItem('user');
 
   if (token) {
     const res = await fetch('/verify', {
@@ -20,12 +21,18 @@ document.addEventListener("DOMContentLoaded", async (_event) => {
     location.href = '/';
   }
 
+  
+
   // Connect to socket.io
   const socket = io(); // automatically tries to connect on same port app was served from
   const username = document.getElementById("uname").innerText;
   const form = document.getElementById("chatForm");
   const messages = document.getElementById("messages");
   const messageToSend = document.getElementById("txt");
+  
+  if(user !== username){
+    location.href = '/';
+  }
   
   form.addEventListener("submit", (event) => {
     socket.emit("message", {
@@ -51,7 +58,7 @@ document.addEventListener("DOMContentLoaded", async (_event) => {
     const userTag = document.createElement("span");
     userTag.className = "nametag";
     userTag.style.color = color;
-    userTag.innerText = msg.user;
+    userTag.innerText = `${msg.user}`;
 
     const userMessage = document.createElement("span");
     userMessage.style.color = color;
@@ -70,6 +77,8 @@ document.addEventListener("DOMContentLoaded", async (_event) => {
     type: "join"
   });
 
+
+  
   socket.on("userAlreadyActive", (user) => {
     window.alert(`${user} is already logged into this chatroom, you will be redirected back to the login page`);
     sessionStorage.clear();
