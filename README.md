@@ -9,7 +9,7 @@ To run the application, use the command `npm run dev`.
 
 Detailed instructions are at this [url](https://cs280spring.github.io/hw/hw5/index.html).
 
-The application is deployed on [Heroku](https://bloo-chat-starter.herokuapp.com/).
+My application is deployed on [Heroku](https://bloo-chat-ddrozdo1.herokuapp.com/).
 
 
 High-Level Explantion:
@@ -21,3 +21,5 @@ index.js serves as the control center or "main" as this where page routing can o
 In terms of templating, I have `parent.njk` file which contains the html for the header and has two blocks, one for the body and another for the scipt. `index.njk` and `chatroom.njk` both extend parent and add in the required html into the template blockes.
 
 Additionally, for code modularity and to improved readability all server-side socket functions/controls have been moved into the module: `socket.js` within the services folder.
+
+Please note there are 2 users in the database: Emily and Daniel are the usernames, the password are pass.
