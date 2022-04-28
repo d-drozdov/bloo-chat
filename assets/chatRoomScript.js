@@ -70,4 +70,10 @@ document.addEventListener("DOMContentLoaded", async (_event) => {
     type: "join"
   });
 
+  socket.on("userAlreadyActive", (user) => {
+    window.alert(`${user} is already logged into this chatroom, you will be redirected back to the login page`);
+    sessionStorage.clear();
+    location.href = '/'; 
+  });
+
 });

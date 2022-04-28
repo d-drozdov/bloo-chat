@@ -10,7 +10,6 @@ class UserDao {
       throw new ApiError(400, "Every new user must have a username");
     }
     if (password === undefined || password === ""){
-      console.log(password);
       throw new ApiError(400, "Every user must have a password!");
     }
 

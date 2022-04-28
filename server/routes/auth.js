@@ -30,7 +30,7 @@ router.post("/authenticate", async (req, res, next) => {
     }
 
     const user = await users.findUser(username);
-    const hashedPassword = (user && user.password) || "";
+    const hashedPassword = (user && user.username && user.password) || "";
 
     // Authentication!
     const isAuthenticated = await verifyPassword(password, hashedPassword);

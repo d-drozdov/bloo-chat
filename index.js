@@ -1,4 +1,3 @@
-const debug = require("debug")("bloo-chat");
 const nunjucks = require("nunjucks");
 const express = require("express");
 const app = express();
@@ -22,20 +21,21 @@ app.use(express.json());
 app.use(express.static("assets"));
 
 // browser routing
+app.get("/", (req, res) => {
+  res.render("index.njk", null);
+});
 
 app.get("/chatroom", async (req, res) => {
   res.render("chatroom.njk", { uname: req.query.uname });
 });
 
-app.get("/", (req, res) => {
-  res.render("index.njk", null);
-});
 
 // server routes
 app.use(auth);
 
-// socket
+// socket logic
 require("./services/socket")(io);
+
 
 app.use(globalErrorHandler);
 
